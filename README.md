@@ -1,5 +1,7 @@
 ![Upload APP logo](https://github.com/user-attachments/assets/4b8145b6-db05-415b-9d1c-511b88dfff83)
 
+[🇺🇸 Česká verze README](README.cs.md)
+
 GitHub action used to **build** and **upload** your Docker images to [Tour de Cloud](https://tourde.cloud).
 
 > [!WARNING]
@@ -55,4 +57,4 @@ There are 2 main steps to make sure your application builds and uploads successf
     
     ```
     
-    This example specifies 2 docker images to be built: `frontend` and `backend`. You can adjust the `context` and `dockerfile` paths according to your project structure.
+    This example specifies 2 docker images to be built: `frontend` and `backend`(will differ in your app). You can adjust the `context` and `dockerfile` paths according to your project structure.

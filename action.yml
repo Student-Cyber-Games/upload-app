@@ -43,7 +43,7 @@ runs:
         slug=$(echo "$response" | jq -r '.slug')
 
         if [ "$paid" != "true" ]; then
-          printf "\n\n##################################################################################\n"
+          printf "\n\n######################################################################################\n"
           printf "# Please pay the entry fee to deploy your application(syncs are made every 8 hours.) #\n"
           printf "######################################################################################\n\n"
           exit 1
