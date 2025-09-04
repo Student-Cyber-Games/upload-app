@@ -34,8 +34,8 @@ There are 2 main steps to make sure your application builds successfully:
     
     This will trigger an upload action on every push to the `main` branch. You can change this to any branch you want.
     
-    > [!IMPORTANT] 
-    > Make sure to set the `TDC_TOKEN` secret in your repository settings. [How to create?](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository)
+> [!IMPORTANT] 
+> Make sure to set the `TDC_TOKEN` secret in your repository settings. [How to create?](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository)
 
 2) Make sure your project has a `tourdeapp.yaml` file in the root directory of your repository. This file is used to configure the build process and specify the details of your web app. Here is an example configuration:
 
