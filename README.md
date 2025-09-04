@@ -1,5 +1,3 @@
-![Upload APP logo](https://github.com/user-attachments/assets/4b8145b6-db05-415b-9d1c-511b88dfff83)
-
 [🇨🇿 Česká verze README](README.cs.md)
 
 GitHub action used to **build** and **upload** your Docker images to [Tour de Cloud](https://tourde.cloud).
