@@ -1,10 +1,13 @@
 ![Upload APP logo](https://github.com/user-attachments/assets/4b8145b6-db05-415b-9d1c-511b88dfff83)
 
-GitHub action used to build and upload your web app to [Tour de App](https://tourdeapp.cz).
+GitHub action used to **build** and **upload** your Docker images to [Tour de Cloud](https://tourde.cloud).
+
+> [!WARNING]
+> The action is guaranteed to fail if the team has not yet paid the starting fee for the competition. 
 
 ## ❓ How to use
 
-There are 2 main steps to make sure your application builds successfully:
+There are 2 main steps to make sure your application builds and uploads successfully:
 
 1) Make sure your project has a `.github/workflows/deploy.yml` file with the following(or similar) content:
 
@@ -32,7 +35,7 @@ There are 2 main steps to make sure your application builds successfully:
               tdc_token: ${{ secrets.TDC_TOKEN }}
     ```
     
-    This will trigger an upload action on every push to the `main` branch. You can change this to any branch you want.
+    This will trigger a build and upload action on every push to the `main` branch. You can change this to any branch you want.
     
 > [!IMPORTANT] 
 > Make sure to set the `TDC_TOKEN` secret in your repository settings. [How to create?](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository)
