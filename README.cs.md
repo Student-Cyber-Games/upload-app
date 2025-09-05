@@ -56,3 +56,19 @@ Jsou 2 hlavní kroky, aby se tvoje aplikace úspěšně sestavila a nahrála:
     ```
 
     Tento příklad specifikuje 2 docker obrazy k sestavení: `frontend` a `backend`(bude se lišit pro tvojí aplikaci). Můžeš upravit cesty `context` a `dockerfile` podle struktury svého projektu.
+> [!TIP]
+> Soubor `tourdeapp.yaml` také podporuje předávání [build arguments](https://docs.docker.com/reference/cli/docker/buildx/build/#build-arg) a náhradu proměnných do Dockerfile. To je užitečné, pokud potřebuješ předat nějaké tajné klíče nebo jiné proměnné prostředí do svého Dockerfile. Můžeš to udělat takto:
+> ```yaml
+> build:
+>  - name: frontend
+>    context: .
+>    dockerfile: ./apps/web/Dockerfile
+>    args:
+>      REACT_APP_API_URL: "https://api.example.com"
+>      REACT_APP_API_KEY: ${API_KEY_ENV_VAR}
+> ```
+> Avšak aby se proměnná `API_KEY_ENV_VAR` správně nahradila, musíš ji vložit do sekce `env` GitHub akce, například takto:
+> ```yaml
+> env:
+>   API_KEY_ENV_VAR: ${{ secrets.API_KEY_ENV_VAR }}
+> ```

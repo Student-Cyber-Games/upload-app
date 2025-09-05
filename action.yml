@@ -22,6 +22,7 @@ runs:
       run: npm install -g ajv-cli
 
     - name: Validate configuration files
+      env: ${{ env }}
       shell: bash
       run: |
         if [ ! -f "tourdeapp.yaml" ]; then
@@ -29,7 +30,8 @@ runs:
           exit 1
         fi
         curl -o schema.json https://portalbush.tourde.cloud/static/schema.json
-        yq eval -o=json tourdeapp.yaml > tourdeapp.json 
+        envsubst < tourdeapp.yaml > tourdeapp.tmp && mv tourdeapp.tmp tourdeapp.yaml
+        yq eval -o=json tourdeapp.yaml > tourdeapp.json
         ajv --spec=draft2020 validate -s schema.json -d tourdeapp.json
     - name: Check if paid
       id: check_payment
@@ -72,17 +74,13 @@ runs:
           build_args=""
           for key in $(echo "$args" | jq -r 'keys[]'); do
             val=$(echo "$args" | jq -r --arg k "$key" '.[$k]')
-            build_args+="--build-arg $key=$val "
+            export build_arg_$key="$val"
+            build_args+="--build-arg $key "
           done
 
+          echo "docker build -f "$dockerfile" $build_args --cache-from=type=gha --cache-to=type=gha,mode=max -t $REGISTRY_URL/${image_fqn} $context"
           echo "Building Docker image with Dockerfile: $dockerfile, context: $context, tag: $REGISTRY_URL/${image_fqn}, args: $build_args"
-          docker build \
-            -f "$dockerfile" \
-            $build_args \
-            --cache-from=type=gha \
-            --cache-to=type=gha,mode=max \
-            -t $REGISTRY_URL/${image_fqn} \
-            $context
+          docker build -f "$dockerfile" $build_args --cache-from=type=gha --cache-to=type=gha,mode=max -t $REGISTRY_URL/${image_fqn} $context
         done
         docker login $REGISTRY_URL --username user --password $REGISTRY_PASSWORD
         for i in $(yq eval '.build | keys | .[]' tourdeapp.yaml); do

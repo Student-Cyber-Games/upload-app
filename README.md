@@ -56,3 +56,20 @@ There are 2 main steps to make sure your application builds and uploads successf
     ```
     
     This example specifies 2 docker images to be built: `frontend` and `backend`(will differ in your app). You can adjust the `context` and `dockerfile` paths according to your project structure.
+
+> [!TIP]
+> The `tourdeapp.yaml` file supports build-time Docker args and bash environment substitution. You can specify them under the `args` section for each build target. For example:
+> ```yaml
+> build:
+>  - name: frontend
+>    context: .
+>    dockerfile: ./apps/web/Dockerfile
+>    args:
+>      REACT_APP_API_URL: "https://api.example.com"
+>      REACT_APP_API_KEY: ${API_KEY_ENV_VAR}
+> ```
+> Note that, in order to have the `API_KEY_ENV_VAR` substituted correctly, you need to put it in the `env` section of the GitHub action, like so:
+> ```yaml
+> env:
+>   API_KEY_ENV_VAR: ${{ secrets.API_KEY_ENV_VAR }}
+> ```
