@@ -75,7 +75,7 @@ runs:
           for key in $(echo "$args" | jq -r 'keys[]'); do
             val=$(echo "$args" | jq -r --arg k "$key" '.[$k]')
             export build_arg_$key="$val"
-            build_args+="--build-arg $key "
+            build_args+="--build-arg build_arg_$key "
           done
 
           echo "docker build -f "$dockerfile" $build_args --cache-from=type=gha --cache-to=type=gha,mode=max -t $REGISTRY_URL/${image_fqn} $context"
