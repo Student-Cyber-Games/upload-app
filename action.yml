@@ -30,7 +30,7 @@ runs:
           exit 1
         fi
         curl -o schema.json https://portalbush.tourde.cloud/static/schema.json
-        envsubst < tourdeapp.yaml > tourdeapp.tmp && mv tourdeapp.tmp tourdeapp.yaml
+        perl -pe 's/\{\{\s*([A-Za-z_][A-Za-z0-9_]*)\s*\}\}/defined $ENV{$1} ? $ENV{$1} : $&/ge' tourdeapp.yaml > tourdeapp.tmp && mv tourdeapp.tmp tourdeapp.yaml
         yq eval -o=json tourdeapp.yaml > tourdeapp.json
         ajv --spec=draft2020 validate -s schema.json -d tourdeapp.json
     - name: Check if paid

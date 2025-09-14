@@ -35,7 +35,7 @@ Jsou dva hlavní kroky, aby se aplikace úspěšně sestavila a nahrála:
 >    dockerfile: ./apps/web/Dockerfile
 >    args:
 >      REACT_APP_API_URL: "https://api.example.com"
->      REACT_APP_API_KEY: ${API_KEY_ENV_VAR}
+>      REACT_APP_API_KEY: {{API_KEY_ENV_VAR}}
 > ```
 > Avšak aby se proměnná `API_KEY_ENV_VAR` správně nahradila, musíš ji vložit do sekce `env` GitHub akce, například takto:
 > ```yaml
