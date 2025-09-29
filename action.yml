@@ -12,7 +12,7 @@ runs:
   using: "composite"
   steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     - uses: actions/setup-node@v4
       with:
@@ -29,7 +29,7 @@ runs:
           echo "❌ tourdeapp.yaml not found!"
           exit 1
         fi
-        curl -o schema.json https://portalbush.tourde.cloud/static/schema.json
+        curl -o schema.json --fail-with-body https://portalbush.tourde.cloud/static/schema.json
         perl -pe 's/\{\{\s*([A-Za-z_][A-Za-z0-9_]*)\s*\}\}/defined $ENV{$1} ? $ENV{$1} : $&/ge' tourdeapp.yaml > tourdeapp.tmp && mv tourdeapp.tmp tourdeapp.yaml
         yq eval -o=json tourdeapp.yaml > tourdeapp.json
         ajv --spec=draft2020 validate -s schema.json -d tourdeapp.json
@@ -94,6 +94,6 @@ runs:
         commit_hash=$(git rev-parse --short HEAD)
         branch_name=${GITHUB_REF#refs/heads/}
         echo "Uploading configuration for commit $commit_hash on branch $branch_name"
-        curl -X POST "https://authmesh.tourde.cloud/${{ steps.check_payment.outputs.documentId }}/config" \
+        curl --fail-with-body -X POST "https://authmesh.tourde.cloud/${{ steps.check_payment.outputs.documentId }}/config" \
         -H "Authorization: Bearer ${{ inputs.tdc_token }}" \
         -Ffile=@tourdeapp.yaml -Fbranch="$branch_name" -Fcommit="$commit_hash"
