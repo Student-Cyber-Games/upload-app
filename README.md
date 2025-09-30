@@ -66,7 +66,7 @@ There are 2 main steps to make sure your application builds and uploads successf
 >    dockerfile: ./apps/web/Dockerfile
 >    args:
 >      REACT_APP_API_URL: "https://api.example.com"
->      REACT_APP_API_KEY: ${API_KEY_ENV_VAR}
+>      REACT_APP_API_KEY: {{API_KEY_ENV_VAR}}
 > ```
 > Note that, in order to have the `API_KEY_ENV_VAR` substituted correctly, you need to put it in the `env` section of the GitHub action, like so:
 > ```yaml
